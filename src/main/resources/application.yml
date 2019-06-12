@@ -1,0 +1,11 @@
+server:
+  port: 9191
+  tomcat.uri-encoding: UTF-8
+spring:
+  data:
+    mongodb:
+      host: 114.115.175.199
+      database: admin
+      port: 27017
+      username: root
+      password: 734190426l
