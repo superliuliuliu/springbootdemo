@@ -1,6 +1,6 @@
 package com.lgy.learn.springbootwebfluxdemo.handler;
 
-import com.lgy.learn.springbootwebfluxdemo.dao.userRepository;
+import com.lgy.learn.springbootwebfluxdemo.dao.UserMongoRepository;
 import com.lgy.learn.springbootwebfluxdemo.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,31 +18,32 @@ import reactor.core.publisher.Mono;
 @Component
 public class userHandler {
 
-    private final userRepository repository;
+    private final UserMongoRepository userMongoRepository;
 
     @Autowired
-    public userHandler(userRepository userrepository){
-        this.repository = userrepository;
+    public userHandler(UserMongoRepository userMongoRepository){
+        this.userMongoRepository = userMongoRepository;
     }
 
     public Mono<User> findById(String id){
-        return Mono.justOrEmpty(repository.findById(id));
+        return userMongoRepository.findById(id);
     }
 
-    public Mono<String> save(User user){
-        return Mono.create(userMonoSink -> userMonoSink.success(repository.save(user)));
+    public Mono<User> save(User user){
+        return userMongoRepository.save(user);
     }
 
-    public Mono<String> update(User user){
-        return Mono.create(userMonoSink -> userMonoSink.success(repository.updateUser(user)));
+    public Mono<User> update(User user){
+        return userMongoRepository.save(user);
     }
 
     public Mono<String> delete(String id){
-        return Mono.create(userMonoSink -> userMonoSink.success(repository.deleteUser(id)));
+        userMongoRepository.deleteById(id);
+        return Mono.create(userMonoSink-> userMonoSink.success(id));
     }
 
     public Flux<User> findAll(){
-        return Flux.fromIterable(repository.findAll());
+        return userMongoRepository.findAll();
     }
 
 }

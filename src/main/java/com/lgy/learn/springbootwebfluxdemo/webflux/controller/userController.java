@@ -33,12 +33,12 @@ public class userController {
     }
 
     @PostMapping(value = "/add")
-    public Mono<String> add(@RequestBody User user){
+    public Mono<User> add(@RequestBody User user){
         return userhandler.save(user);
     }
 
     @PostMapping(value = "/update")
-    public Mono<String> update(@RequestBody User user){
+    public Mono<User> update(@RequestBody User user){
         return userhandler.update(user);
     }
 
